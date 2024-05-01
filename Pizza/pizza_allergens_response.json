@@ -1,0 +1,84 @@
+{
+    "pizzas": [
+        {
+            "id": 1,
+            "filling": [
+                "tomato sauce",
+                "cheese"
+            ],
+            "name": "Margarita"
+        },
+        {
+            "id": 2,
+            "filling": [
+                "tomato sauce",
+                "cheese",
+                "ham"
+            ],
+            "name": "Vesuvio"
+        },
+        {
+            "id": 3,
+            "filling": [
+                "tomato sauce",
+                "cheese",
+                "shrimp"
+            ],
+            "name": "Bussola"
+        },
+        {
+            "id": 4,
+            "filling": [
+                "tomato sauce",
+                "cheese",
+                "ham",
+                "pineapple"
+            ],
+            "name": "Hawaii"
+        },
+        {
+            "id": 5,
+            "filling": [
+                "tomato sauce",
+                "cheese",
+                "ham",
+                "mushroom"
+            ],
+            "name": "Capricciosa"
+        }
+    ],
+    "allergenes": [
+        {
+            "id": 1,
+            "name": "tomato sauce",
+            "allergenes": [
+                "Tomato",
+                "Onion",
+                "Basil",
+                "Olive Oil",
+                "Garlic"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "cheese",
+            "allergenes": [
+                "Lactose"
+            ]
+        },
+        {
+            "id": 3,
+            "name": "shrimp",
+            "allergenes": [
+                "shell fish"
+            ]
+        },
+        {
+            "id": 4,
+            "name": "pineapple",
+            "allergenes": [
+                "pineapple"
+            ]
+        }
+    ]
+}

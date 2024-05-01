@@ -1,0 +1,1434 @@
+@prefix : <https://kg.scania.com/it/iris_orchestration/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix core: <http://kg.scania.com/core/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://kg.scania.com/it/iris_orchestration> .
+
+<https://kg.scania.com/it/iris_orchestration> rdf:type owl:Ontology ;
+                                               <http://purl.org/dc/terms/title> "IRIS_Orchestration" ;
+                                               <http://www.linkedmodel.org/1.2/schema/vaem#namespace> : ;
+                                               rdfs:label "IRIS_Orchestration" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://kg.scania.com/core/timestamp
+core:timestamp rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/title
+<http://purl.org/dc/terms/title> rdf:type owl:AnnotationProperty .
+
+
+###  http://www.linkedmodel.org/1.2/schema/vaem#namespace
+<http://www.linkedmodel.org/1.2/schema/vaem#namespace> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://kg.scania.com/it/iris_orchestration/hasAction
+:hasAction rdf:type owl:ObjectProperty ;
+           rdfs:domain :Task ;
+           rdfs:range :Action ;
+           core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+           rdfs:comment "Relation from the Task to the first action in the OFG."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "hasAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasAuthenticationMethod
+:hasAuthenticationMethod rdf:type owl:ObjectProperty ;
+                         rdfs:domain :Connector ;
+                         rdfs:range :AuthenticationMethod ;
+                         core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+                         rdfs:comment "Relation from a connector and a authentication method."@en ;
+                         rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                         rdfs:label "hasAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasConnector
+:hasConnector rdf:type owl:ObjectProperty ;
+              rdfs:domain [ rdf:type owl:Class ;
+                            owl:unionOf ( :HTTPAction
+                                          :ResultAction
+                                          :SOAPAction
+                                        )
+                          ] ;
+              rdfs:range :Connector ;
+              core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+              rdfs:comment "Relation from actions that need to connect to some external system, to the respective connector instance."@en ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "hasConnector" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasContext
+:hasContext rdf:type owl:ObjectProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :ScriptAction
+                                        :SparqlConvertAction
+                                        :Task
+                                      )
+                        ] ;
+            rdfs:range :JsonLdContext ;
+            core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+            rdfs:comment "Relation from a Action that requires a Json-LD Context to the respective Context."@en ;
+            rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+            rdfs:label "hasContext" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasNextAction
+:hasNextAction rdf:type owl:ObjectProperty ;
+               rdfs:domain :Action ;
+               rdfs:range :Action ;
+               core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+               rdfs:comment "Relation from one action to another. The OFG will end when an Action doesn't have this relation as predicate."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "hasNextAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasParallelAction
+:hasParallelAction rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Action ;
+                   rdfs:range :Action ;
+                   core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+                   rdfs:comment "Relation between one Action and another Action which can be run in paralell."@en ;
+                   rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                   rdfs:label "hasParallelAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasResultMetaData
+:hasResultMetaData rdf:type owl:ObjectProperty ;
+                   rdfs:domain :Task ;
+                   rdfs:range :ResultMetaData ;
+                   core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+                   rdfs:comment "Relation from a Task to the its ResultMetaData instance."@en ;
+                   rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                   rdfs:label "hasResultMetaData" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasScript
+:hasScript rdf:type owl:ObjectProperty ;
+           rdfs:domain :ScriptAction ;
+           rdfs:range :Script ;
+           core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+           rdfs:comment "Relation from a ScriptAction to its script."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "hasScript" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/hasSystem
+:hasSystem rdf:type owl:ObjectProperty ;
+           rdfs:domain :Action ;
+           rdfs:range :System ;
+           core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+           rdfs:comment "Relation from a Action to a system the Action is dependent on."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "hasSystem" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/inputParameter
+:inputParameter rdf:type owl:ObjectProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( :Action
+                                            :AuthenticationMethod
+                                            :Task
+                                          )
+                            ] ;
+                rdfs:range :Parameter ;
+                core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+                rdfs:comment "This parameter can be attached to a SOAPAction, Task or an ScriptAction as an inputParameter."@en ;
+                rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                rdfs:label "inputParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/outputParameter
+:outputParameter rdf:type owl:ObjectProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( :HTTPAction
+                                             :SOAPAction
+                                             :ScriptAction
+                                           )
+                             ] ;
+                 rdfs:range :Parameter ;
+                 core:timestamp "2023-03-15T11:00:00"^^xsd:dateTime ;
+                 rdfs:comment "This parameter can be attached to a ScriptAction"@en ;
+                 rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                 rdfs:label "outputParameter" .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://kg.scania.com/core/contributor
+core:contributor rdf:type owl:DatatypeProperty ;
+                 rdfs:domain core:Metadata ;
+                 rdfs:range xsd:string ;
+                 core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                 rdfs:comment "Contributor (user) of meta data for the OFG."@en ;
+                 rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                 rdfs:label "contributor" .
+
+
+###  http://kg.scania.com/core/creator
+core:creator rdf:type owl:DatatypeProperty ;
+             rdfs:domain core:Metadata ;
+             rdfs:range xsd:string ;
+             core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+             rdfs:comment "Creator (user) of meta data for the OFG."@en ;
+             rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+             rdfs:label "creator" .
+
+
+###  http://kg.scania.com/core/graphType
+core:graphType rdf:type owl:DatatypeProperty ;
+               rdfs:domain core:Metadata ;
+               rdfs:range xsd:string ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "What access type the graph has. The options are public, semi-public or private."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "graphType" .
+
+
+###  http://kg.scania.com/core/informationResponsible
+core:informationResponsible rdf:type owl:DatatypeProperty .
+
+
+###  https://kg.scania.com/it/iris_orchestration/baseUrl
+:baseUrl rdf:type owl:DatatypeProperty ;
+         rdfs:domain :HTTPConnector ;
+         rdfs:range xsd:string ;
+         core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+         rdfs:comment "Base URL for the external system a Action connects to."@en ;
+         rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+         rdfs:label "baseUrl" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/bindingName
+:bindingName rdf:type owl:DatatypeProperty ;
+             rdfs:domain :SOAPConnector ;
+             rdfs:range xsd:string ;
+             core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+             rdfs:comment "Name for binding of a SOAP Action."@en ;
+             rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+             rdfs:label "bindingName" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/constructSparql
+:constructSparql rdf:type owl:DatatypeProperty ;
+                 rdfs:range xsd:string ;
+                 core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                 rdfs:comment "construct Sparql script (unused)."@en ;
+                 rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                 rdfs:label "constructSparql" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/context
+:context rdf:type owl:DatatypeProperty ;
+         rdfs:domain :JsonLdContext ;
+         rdfs:range xsd:string ;
+         core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+         rdfs:comment "The context attribute is always included in Scripts that is executed from ScriptActions."@en ;
+         rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+         rdfs:label "context" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:domain core:Metadata ;
+             rdfs:range xsd:string ;
+             core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+             rdfs:comment "Description of the use case for the particular OFG."@en ;
+             rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+             rdfs:label "description" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/enableReasoner
+:enableReasoner rdf:type owl:DatatypeProperty ;
+                rdfs:domain :QueryAction ;
+                rdfs:range xsd:boolean ;
+                core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                rdfs:comment "Boolean deciding whether or not reasoner capabilities should be enabled for a query."@en ;
+                rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                rdfs:label "enableReasoner"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/endpoint
+:endpoint rdf:type owl:DatatypeProperty ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( :HTTPAction
+                                      :HTTPParameter
+                                    )
+                      ] ;
+          rdfs:range xsd:string ;
+          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+          rdfs:comment "Endpoint for the HTTP request."@en ;
+          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+          rdfs:label "endpoint" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/graph
+:graph rdf:type owl:DatatypeProperty ;
+       rdfs:range xsd:string ;
+       core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+       rdfs:comment "What named graph Stardog will ask for metadata object."@en ;
+       rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+       rdfs:label "graph" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/httpBody
+:httpBody rdf:type owl:DatatypeProperty ;
+          rdfs:domain :HTTPParameter ;
+          rdfs:range xsd:string ;
+          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+          rdfs:comment "HTTP body for request to Stardog."@en ;
+          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+          rdfs:label "httpBody" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/httpHeader
+:httpHeader rdf:type owl:DatatypeProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :HTTPAction
+                                        :HTTPParameter
+                                        :ResultAction
+                                      )
+                        ] ;
+            rdfs:range xsd:string ;
+            core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+            rdfs:comment "HTTP header for request to Stardog."@en ;
+            rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+            rdfs:label "httpHeader" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/httpQueryParameter
+:httpQueryParameter rdf:type owl:DatatypeProperty ;
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( :HTTPAction
+                                                :HTTPParameter
+                                              )
+                                ] ;
+                    rdfs:range xsd:string ;
+                    core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                    rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                    rdfs:label "httpQueryParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/inputHelper
+:inputHelper rdf:type owl:DatatypeProperty ;
+             core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+             rdfs:comment "Input helper."@en ;
+             rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+             rdfs:label "inputHelper" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/ooVersion
+:ooVersion rdf:type owl:DatatypeProperty ;
+           rdfs:domain core:Metadata ;
+           rdfs:range xsd:string ;
+           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+           rdfs:comment "Orchestration Ontology version."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "ooVersion" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/paramName
+:paramName rdf:type owl:DatatypeProperty ;
+           rdfs:domain :StandardParameter ;
+           rdfs:range xsd:string ;
+           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+           rdfs:comment "paramName value will be the “key” to retrieve the contents"@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "paramName" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/paramValue
+:paramValue rdf:type owl:DatatypeProperty ;
+            core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+            rdfs:comment "Parameter Value."@en ;
+            rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+            rdfs:label "paramValue" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/password
+:password rdf:type owl:DatatypeProperty ;
+          rdfs:domain :BasicCredentialsParameter ;
+          rdfs:range xsd:string ;
+          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+          rdfs:comment "Password credentials for  all interfaces using basicAuth."@en ;
+          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+          rdfs:label "password" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/query
+:query rdf:type owl:DatatypeProperty ;
+       rdfs:domain :SparqlQueryParameter ;
+       rdfs:range xsd:string ;
+       core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+       rdfs:comment "query for Sparql Query Parameter."@en ;
+       rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+       rdfs:label "query"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/script
+:script rdf:type owl:DatatypeProperty ;
+        rdfs:domain :Script ;
+        core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+        rdfs:comment "Script for a Script instance."@en ;
+        rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+        rdfs:label "script" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/soapOperation
+:soapOperation rdf:type owl:DatatypeProperty ;
+               rdfs:domain :SOAPAction ;
+               rdfs:range xsd:string ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "The key 'keyName' for a SOAP Action."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "soapOperation" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/sparql
+:sparql rdf:type owl:DatatypeProperty ;
+        rdfs:domain :VirtualGraphAction ;
+        rdfs:range xsd:string ;
+        core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+        rdfs:comment "SPARQL."@en ;
+        rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+        rdfs:label "sparql" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/state
+:state rdf:type owl:DatatypeProperty ;
+       rdfs:domain :ResultMetaData ;
+       rdfs:range xsd:string ;
+       core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+       rdfs:comment "State."@en ;
+       rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+       rdfs:label "state" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/timestamp
+:timestamp rdf:type owl:DatatypeProperty ;
+           rdfs:domain core:Metadata ;
+           rdfs:range xsd:dateTime ;
+           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+           rdfs:comment "Timestamp meta data"@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "timestamp" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/title
+:title rdf:type owl:DatatypeProperty ;
+       rdfs:domain core:Metadata ;
+       rdfs:range xsd:string ;
+       core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+       rdfs:comment "Title meta data."@en ;
+       rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+       rdfs:label "title" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/username
+:username rdf:type owl:DatatypeProperty ;
+          rdfs:domain :BasicCredentialsParameter ;
+          rdfs:range xsd:string ;
+          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+          rdfs:comment "Username credentials for all interfaces using basicAuth."@en ;
+          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+          rdfs:label "username" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/wsdlFile
+:wsdlFile rdf:type owl:DatatypeProperty ;
+          rdfs:domain :SOAPConnector ;
+          rdfs:range xsd:string ;
+          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+          rdfs:comment "WSDL File for SOAP connector."@en ;
+          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+          rdfs:label "wsdlFile" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/77415076_96a4_43d9_99d4_8daa3f147215
+<https://kg.scania.com/it/iris_orchestration/77415076_96a4_43d9_99d4_8daa3f147215> rdf:type owl:DatatypeProperty ;
+                                                                                   rdfs:domain :TokenCredentialsParameter ;
+                                                                                   rdfs:range xsd:string ;
+                                                                                   core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                                                                                   rdfs:comment "Token credentials."@en ;
+                                                                                   rdfs:label "token"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://kg.scania.com/core/Metadata
+core:Metadata rdf:type owl:Class ;
+              core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "Metadata" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/Action
+:Action rdf:type owl:Class ;
+        core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+        rdfs:comment "The flow of a OFG is connected by a sequence of Actions."@en ;
+        rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+        rdfs:label "Action" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/AuthenticationMethod
+:AuthenticationMethod rdf:type owl:Class ;
+                      core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                      rdfs:comment "This is the classes that you attach to a configured connector when a system require either basic authentication or SSO."@en ;
+                      rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                      rdfs:label "AuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/BasicCredentialsParameter
+:BasicCredentialsParameter rdf:type owl:Class ;
+                           rdfs:subClassOf :Parameter ;
+                           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                           rdfs:comment "The purpose of this class is to store username and password with a unique IRI used in BasicAuthenticationMethod’s of different protocols, HTTP and SOAP is supported as of now."@en ;
+                           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                           rdfs:label "BasicCredentialsParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/Connector
+:Connector rdf:type owl:Class ;
+           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+           rdfs:comment "These are the classes that sets the base configuration to be able to reach external system with either SOAP or REST protocol."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "Connector" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/GroovyScript
+:GroovyScript rdf:type owl:Class ;
+              rdfs:subClassOf :Script ;
+              core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+              rdfs:comment "Script of type Groovy"@en ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "GroovyScript" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPAction
+:HTTPAction rdf:type owl:Class ;
+            rdfs:subClassOf :Action ;
+            core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+            rdfs:comment "HttpAction can be used as a POST or a GET depending on if you specify a httpBody in either the action itself or receive it from the inputParameter."@en ;
+            rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+            rdfs:label "HTTPAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPAuthenticationMethod
+:HTTPAuthenticationMethod rdf:type owl:Class ;
+                          rdfs:subClassOf :AuthenticationMethod ;
+                          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                          rdfs:comment "This class is attached to a configured HTTP connector when required."@en ;
+                          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                          rdfs:label "HTTPAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPBasicAuthenticationMethod
+:HTTPBasicAuthenticationMethod rdf:type owl:Class ;
+                               rdfs:subClassOf :HTTPAuthenticationMethod ,
+                                               [ owl:intersectionOf ( :HTTPAuthenticationMethod
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty :inputParameter ;
+                                                                        owl:someValuesFrom :BasicCredentialsParameter
+                                                                      ]
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] ;
+                               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                               rdfs:comment "Will use the username and password."@en ;
+                               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                               rdfs:label "HTTPBasicAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPBearerTokenAuthenticationMethod
+:HTTPBearerTokenAuthenticationMethod rdf:type owl:Class ;
+                                     rdfs:subClassOf :HTTPAuthenticationMethod ,
+                                                     [ owl:intersectionOf ( :HTTPAuthenticationMethod
+                                                                            [ rdf:type owl:Restriction ;
+                                                                              owl:onProperty :inputParameter ;
+                                                                              owl:someValuesFrom :TokenCredentialsParameter
+                                                                            ]
+                                                                          ) ;
+                                                       rdf:type owl:Class
+                                                     ] ;
+                                     core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                                     rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                                     rdfs:label "HTTPBearerTokenAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPConnector
+:HTTPConnector rdf:type owl:Class ;
+               rdfs:subClassOf :Connector ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "This class sets the base Url of a REST system. If this system has an authentication method like basic authentication or SSO you can attach such relation to the connector."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "HTTPConnector" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/HTTPParameter
+:HTTPParameter rdf:type owl:Class ;
+               rdfs:subClassOf :Parameter ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "The purpose of this class is to store data / information with a unique IRI but with a set of keys that is known for the HttpAction and ResultAction."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "HTTPParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/JsonLdContext
+:JsonLdContext rdf:type owl:Class ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "Class that has the attribute 'context' which will store the jsonld context of the ontology you want to convert data to."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "JsonLdContext" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/KafkaConnector
+:KafkaConnector rdf:type owl:Class ;
+                rdfs:subClassOf :Connector ;
+                core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                rdfs:comment "The purpose of this class is to store information in order to connect to Kafka"@en ;
+                rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                rdfs:label "KafkaConnector" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/Parameter
+:Parameter rdf:type owl:Class ;
+           core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+           rdfs:comment "Objects of subclass “parameter” is to store data between actions."@en ;
+           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+           rdfs:label "Parameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/PythonScript
+:PythonScript rdf:type owl:Class ;
+              rdfs:subClassOf :Script ;
+              core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+              rdfs:comment "Script of type Python"@en ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "PythonScript" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/QueryAction
+:QueryAction rdf:type owl:Class ;
+             rdfs:subClassOf :Action ;
+             core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+             rdfs:comment "This action is used when you want to run a query in the orchestration."@en ;
+             rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+             rdfs:label "QueryAction"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/ResultAction
+:ResultAction rdf:type owl:Class ;
+              rdfs:subClassOf :Action ;
+              core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+              rdfs:comment "This action is used when you want to upload to your resultGraph. The attributes in the inputParameter have priority over the attributes on the action. If httpBody exist in both inputParameter and action, the attribute value on the inputParameter will be used. HttpHeader will be merged but if the same key exists in both of the inputParameter will be used. "@en ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "ResultAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/ResultMetaData
+:ResultMetaData rdf:type owl:Class ;
+                core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                rdfs:comment "Metadata for the result graph"@en ;
+                rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                rdfs:label "ResultMetaData" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SOAPAction
+:SOAPAction rdf:type owl:Class ;
+            rdfs:subClassOf :Action ;
+            core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+            rdfs:comment "This action is used when you want to do a SOAP call towards an external system."@en ;
+            rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+            rdfs:label "SOAPAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SOAPAuthenticationMethod
+:SOAPAuthenticationMethod rdf:type owl:Class ;
+                          rdfs:subClassOf :AuthenticationMethod ;
+                          core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                          rdfs:comment "This class is attached to a configured SOAP connector when required."@en ;
+                          rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                          rdfs:label "SOAPAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SOAPBasicAuthenticationMethod
+:SOAPBasicAuthenticationMethod rdf:type owl:Class ;
+                               rdfs:subClassOf :SOAPAuthenticationMethod ,
+                                               [ owl:intersectionOf ( :SOAPAuthenticationMethod
+                                                                      [ rdf:type owl:Restriction ;
+                                                                        owl:onProperty :inputParameter ;
+                                                                        owl:someValuesFrom :BasicCredentialsParameter
+                                                                      ]
+                                                                    ) ;
+                                                 rdf:type owl:Class
+                                               ] ;
+                               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+                               rdfs:comment "Will use the username and password."@en ;
+                               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                               rdfs:label "SOAPBasicAuthenticationMethod" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SOAPConnector
+:SOAPConnector rdf:type owl:Class ;
+               rdfs:subClassOf :Connector ;
+               core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+               rdfs:comment "This class sets the basic needs to connect to a SOAP system. If this system has a authentication method like basic authentication or SSO you are able to attach such relation to the connector."@en ;
+               rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+               rdfs:label "SOAPConnector" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/Script
+:Script rdf:type owl:Class ;
+        core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+        rdfs:comment "The scriptClasses are objects that holds a script file of a certain type."@en ;
+        rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+        rdfs:label "Script" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/ScriptAction
+:ScriptAction rdf:type owl:Class ;
+              rdfs:subClassOf :Action ;
+              core:timestamp "2023-03-15T11:30:00"^^xsd:dateTime ;
+              rdfs:comment "Action that runs a script, often used for data transformation."@en ;
+              rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+              rdfs:label "ScriptAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SparqlConvertAction
+:SparqlConvertAction rdf:type owl:Class ;
+                     rdfs:subClassOf :Action ;
+                     core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+                     rdfs:comment "Actions for converting Sparql."@en ;
+                     rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                     rdfs:label "SparqlConvertAction" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/SparqlQueryParameter
+:SparqlQueryParameter rdf:type owl:Class ;
+                      rdfs:subClassOf :Parameter ;
+                      core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+                      rdfs:comment "Sparql Query Parameter."@en ;
+                      rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                      rdfs:label "SparqlQueryParameter"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/StandardParameter
+:StandardParameter rdf:type owl:Class ;
+                   rdfs:subClassOf :Parameter ;
+                   core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+                   rdfs:comment "The purpose of this class is to store data in a defined key to be used as an inputParameter and outputParameter to different Actions."@en ;
+                   rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                   rdfs:label "StandardParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/System
+:System rdf:type owl:Class ;
+        core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+        rdfs:comment "This class is a representation of an external system. is used to be able to group Actions that is connected the same external system, which is mainly used as information/knowledge in order to be able to find actions towards a specific system."@en ;
+        rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+        rdfs:label "System" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/Task
+:Task rdf:type owl:Class ;
+      core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+      rdfs:comment "The OFG flow always starts with a Task. The instances belonging to this class contains useful data for the specific OFG."@en ;
+      rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+      rdfs:label "Task" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/TokenCredentialsParameter
+:TokenCredentialsParameter rdf:type owl:Class ;
+                           rdfs:subClassOf :Parameter ;
+                           core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+                           rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                           rdfs:label "TokenCredentialsParameter" .
+
+
+###  https://kg.scania.com/it/iris_orchestration/VirtualGraphAction
+:VirtualGraphAction rdf:type owl:Class ;
+                    rdfs:subClassOf :Action ;
+                    core:timestamp "2023-03-15T12:00:00"^^xsd:dateTime ;
+                    rdfs:comment "Actions of type virtual graph."@en ;
+                    rdfs:isDefinedBy <https://kg.scania.com/it/iris_orchestration> ;
+                    rdfs:label "VirtualGraphAction" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_01cbb96d_1c66_44c3_b6b7_666b6374cf1f
+:OWLNamedIndividual_01cbb96d_1c66_44c3_b6b7_666b6374cf1f rdf:type owl:NamedIndividual ,
+                                                                  :HTTPConnector ;
+                                                         :hasAuthenticationMethod :OWLNamedIndividual_dade0fd3_1e61_47a2_8dee_4b224c931b75 ;
+                                                         :baseUrl "http://localhost:3000" ;
+                                                         rdfs:label "connector_PIZZA"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_0d222f46_e1b3_429c_bd1f_2a455901a2af
+:OWLNamedIndividual_0d222f46_e1b3_429c_bd1f_2a455901a2af rdf:type owl:NamedIndividual ,
+                                                                  :HTTPParameter ;
+                                                         :httpBody "" ;
+                                                         rdfs:label "param_allergenesDetails_stardog"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_13478c21_7aa8_462e_b3e4_588f159d1931
+:OWLNamedIndividual_13478c21_7aa8_462e_b3e4_588f159d1931 rdf:type owl:NamedIndividual ,
+                                                                  :ResultMetaData ;
+                                                         core:contributor "user@mail.com" ;
+                                                         core:graphType "private" ;
+                                                         core:informationResponsible "user@mail.com" ;
+                                                         :description "This instance details will be used as Metadata in resultgraph which will be used for NamedGraph security. This description details will be copied to all the ResultGraph" ;
+                                                         :title "" ;
+                                                         rdfs:label "pizza_resultMetaData"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_17ea3a4b_7fe0_4632_8eab_5bf3dd7a9e85
+:OWLNamedIndividual_17ea3a4b_7fe0_4632_8eab_5bf3dd7a9e85 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPAction ;
+                                                         :hasConnector :OWLNamedIndividual_01cbb96d_1c66_44c3_b6b7_666b6374cf1f ;
+                                                         :hasNextAction :OWLNamedIndividual_1e0860b8_618c_4fee_a371_815b05f9da29 ;
+                                                         :hasSystem :OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0 ;
+                                                         :inputParameter :OWLNamedIndividual_4f1605c9_3e0c_4dd3_9073_bc36c928b79e ;
+                                                         :outputParameter :OWLNamedIndividual_f9879480_3a86_4ddb_ba74_f0d217f6b96b ;
+                                                         :endpoint "/pizzas" ;
+                                                         :httpQueryParameter """{
+\"size\":\"\"
+}""" ;
+                                                         rdfs:label "httpAction_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_1e0860b8_618c_4fee_a371_815b05f9da29
+:OWLNamedIndividual_1e0860b8_618c_4fee_a371_815b05f9da29 rdf:type owl:NamedIndividual ,
+                                                                  :ScriptAction ;
+                                                         :hasContext :OWLNamedIndividual_93864c4c_5701_40c7_be99_b22f76d94f56 ;
+                                                         :hasNextAction :OWLNamedIndividual_754e88b1_5005_4e60_8275_babc8257d76a ;
+                                                         :hasScript :OWLNamedIndividual_d484fd2c_cc13_4284_ae65_9a5fcb261868 ;
+                                                         :hasSystem :OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0 ;
+                                                         :inputParameter :OWLNamedIndividual_f9879480_3a86_4ddb_ba74_f0d217f6b96b ;
+                                                         :outputParameter :OWLNamedIndividual_525aa99c_d6f2_4363_b1ef_ba552848b6fd ;
+                                                         rdfs:label "scriptAction_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_29fc670b_22f1_4c78_b870_a8424ff66600
+:OWLNamedIndividual_29fc670b_22f1_4c78_b870_a8424ff66600 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPAction ;
+                                                         :hasConnector :OWLNamedIndividual_75ac6de3_9d3f_41e6_ab49_87fdbd81e66d ;
+                                                         :hasNextAction :OWLNamedIndividual_710458eb_a01b_40fa_846b_903276794c8c ;
+                                                         :hasSystem :OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0 ;
+                                                         :inputParameter :OWLNamedIndividual_b0113089_b0ca_46b2_9a39_809932e10af7 ;
+                                                         :outputParameter :OWLNamedIndividual_78661078_9160_4cd0_80ef_f9359c85edb3 ;
+                                                         :endpoint "/allergenes" ;
+                                                         :httpQueryParameter """{
+\"itemId\":\"\"
+}""" ;
+                                                         rdfs:label "httpAction_allergenes"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_3a45ce92_cb98_42b6_bf1b_9cc25465238e
+:OWLNamedIndividual_3a45ce92_cb98_42b6_bf1b_9cc25465238e rdf:type owl:NamedIndividual ,
+                                                                  :BasicCredentialsParameter ;
+                                                         :password "" ;
+                                                         :username "" ;
+                                                         rdfs:label "param_pizza_credential"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_4f1605c9_3e0c_4dd3_9073_bc36c928b79e
+:OWLNamedIndividual_4f1605c9_3e0c_4dd3_9073_bc36c928b79e rdf:type owl:NamedIndividual ,
+                                                                  :StandardParameter ;
+                                                         :paramName "size" ;
+                                                         rdfs:label "param_pizza_size"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_525aa99c_d6f2_4363_b1ef_ba552848b6fd
+:OWLNamedIndividual_525aa99c_d6f2_4363_b1ef_ba552848b6fd rdf:type owl:NamedIndividual ,
+                                                                  :HTTPParameter ;
+                                                         :httpBody "" ;
+                                                         rdfs:label "param_pizzaDetails_stardog"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_5f935e41_7129_4262_b54b_87298dc18fbb
+:OWLNamedIndividual_5f935e41_7129_4262_b54b_87298dc18fbb rdf:type owl:NamedIndividual ,
+                                                                  :BasicCredentialsParameter ;
+                                                         :password "" ;
+                                                         :username "" ;
+                                                         rdfs:label "param_stardog_credential"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0
+:OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0 rdf:type owl:NamedIndividual ,
+                                                                  :System ;
+                                                         rdfs:label "PIZZA"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_69eaaa6c_e481_4615_a53b_a71b28d69094
+:OWLNamedIndividual_69eaaa6c_e481_4615_a53b_a71b28d69094 rdf:type owl:NamedIndividual ,
+                                                                  :GroovyScript ;
+                                                         :script """import com.google.gson.Gson
+import groovy.json.JsonSlurper
+import org.apache.commons.io.IOUtils
+import org.apache.jena.query.Dataset
+import org.apache.jena.query.DatasetFactory
+import org.apache.jena.query.Query
+import org.apache.jena.query.QueryExecution
+import org.apache.jena.query.QueryExecutionFactory
+import org.apache.jena.query.QueryFactory
+import org.apache.jena.query.ReadWrite
+import org.apache.jena.rdf.model.Model
+import org.apache.jena.riot.Lang
+import org.apache.jena.riot.RDFDataMgr
+import org.apache.jena.riot.RDFLanguages
+import org.apache.jena.riot.RDFParser
+import org.json.XML
+import org.json.JSONObject
+
+def jsonSlurper = new JsonSlurper();
+
+//result map which stores final result
+result = [:]
+
+//ClassLoader classLoader = getClass().getClassLoader();
+//URL listElem = classLoader.getResource('apiResources/allergenes.json');
+//def _data = new File(listElem.toURI())
+//data_res = jsonSlurper.parse(_data)
+//
+//ctx = jsonSlurper.parseText(data_res.getAt(\"context\"))
+//data_inputparams = jsonSlurper.parseText(data_res.getAt(\"inputParameter\"))
+//data_httpbody = getValues(data_inputparams.getAt(\"allergenes_res\"),jsonSlurper)
+//data_outputparams = jsonSlurper.parseText(data_res.getAt(\"outputParameters\"))
+
+ctx = jsonSlurper.parseText(context)
+data_inputparams = jsonSlurper.parseText(inputParameter)
+data_httpbody = getValues(data_inputparams.getAt(\"allergenes_res\"),jsonSlurper)
+data_outputparams = jsonSlurper.parseText(outputParameters)
+
+def getValues(List list,JsonSlurper jsonSlurper){
+    paramValuesList = []
+    for(Map map:list) {
+        map.each {
+            key,value ->
+                for(String valueList:((ArrayList)jsonSlurper.parseText(value))){
+                    paramValuesList.add(valueList)
+                }
+        }
+    }
+    return paramValuesList
+}
+
+def createResultParameter(String subjectIri, HashMap<String, String> keyValue) {
+    resultValue = [:]
+    keyValue.each { key, value ->
+        resultValue.put(key, value)
+    }
+    result.put(subjectIri, resultValue)
+}
+
+// to convert base64 encoded String to xml
+def base64Decode(encodedString){
+    byte[] decoded = encodedString.decodeBase64()
+    String decode = new String(decoded)
+    return decode
+}
+
+//Main function
+def main(JsonSlurper jsonSlurper) {
+    Gson gson = new Gson();
+    mapGraph = [:]
+    httpBody = \"\"
+    resultList = []
+    Dataset ds = DatasetFactory.createTxnMem();
+        mapGraph[\"@context\"] = ctx
+        mapGraph[\"@graph\"] = jsonSlurper.parseText(data_httpbody)
+        resultString = gson.toJson(mapGraph, Map.class);
+        InputStream is = IOUtils.toInputStream(resultString, \"UTF-8\");
+        RDFParser.source(is).lang(RDFLanguages.JSONLD)
+                .parse(ds);
+        qry =   \"                PREFIX pz:<http://kg.scania.com/it/pizza/>\\n\" +
+              \"                PREFIX :<http://kg.scania.com/pizza#>\\n\" +
+              \"                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\\n\" +
+              \"                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\\n\" +
+              \"                CONSTRUCT{\\n\" +
+              \"                    ?item rdf:type pz:Ingredient ;\\n\" +
+              \"                           pz:id ?id ;\\n\" +
+              \"                           rdfs:label ?name ;\\n\" +
+              \"                           pz:hasAllergen ?allergenes .\\n\" +
+              \"                    ?allergenes rdf:type pz:Allergen;\\n\" +
+              \"                               rdfs:label ?allergene.\\n\" +
+              \"                    \\n\" +
+              \"                }\\n\" +
+              \"                WHERE{\\n\" +
+              \"                    {?s <http://kg.scania.com/it/pizza/id> \\\"1\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/allergenes> ?allergene.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\",REPLACE(STR(?allergene), \\\" \\\", \\\"_\\\"))) AS ?allergenes)\\n\" +
+              \"                    BIND(REPLACE(STR(?name),\\\" \\\",\\\"_\\\") AS ?item_name)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?item_name))) as ?item)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"1\\\")) as ?id)\\n\" +
+              \"                    }\\n\" +
+              \"                    UNION{\\n\" +
+              \"                    ?s <http://kg.scania.com/it/pizza/id> \\\"2\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/allergenes> ?allergene.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\",REPLACE(STR(?allergene), \\\" \\\", \\\"_\\\"))) AS ?allergenes)\\n\" +
+              \"                    BIND(REPLACE(STR(?name),\\\" \\\",\\\"_\\\") AS ?item_name)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?item_name))) as ?item)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"2\\\")) as ?id)\\n\" +
+              \"                    }\\n\" +
+              \"                     UNION{\\n\" +
+              \"                        ?s <http://kg.scania.com/it/pizza/id> \\\"3\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/allergenes> ?allergene.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\",REPLACE(STR(?allergene), \\\" \\\", \\\"_\\\"))) AS ?allergenes)\\n\" +
+              \"                    BIND(REPLACE(STR(?name),\\\" \\\",\\\"_\\\") AS ?item_name)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?item_name))) as ?item)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"3\\\")) as ?id)\\n\" +
+              \"                    }\\n\" +
+              \"                     UNION{\\n\" +
+              \"                        ?s <http://kg.scania.com/it/pizza/id> \\\"4\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/allergenes> ?allergene.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\",REPLACE(STR(?allergene), \\\" \\\", \\\"_\\\"))) AS ?allergenes)\\n\" +
+              \"                    BIND(REPLACE(STR(?name),\\\" \\\",\\\"_\\\") AS ?item_name)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?item_name))) as ?item)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"4\\\")) as ?id)\\n\" +
+              \"                    }\\n\" +
+              \"                    }\";
+        Query query = QueryFactory.create(qry);
+        ds.begin(ReadWrite.READ);
+        try {
+            QueryExecution qexec = QueryExecutionFactory.create(query, ds);
+            Model modelresult = qexec.execConstruct();
+            StringWriter out = new StringWriter();
+            RDFDataMgr.write(out, modelresult, Lang.JSONLD);
+            httpBody = out.toString();
+            //System.out.println(out.toString());
+            qexec.close();
+        } finally {
+            ds.end();
+        }
+        resultList.add(httpBody)
+        resultmap = [:]
+        resultmap.put(\"httpBody\", resultList)
+        createResultParameter(data_outputparams.get(\"param_allergenesDetails_stardog\"), resultmap)
+}
+
+main(jsonSlurper)
+return result""" ;
+                                                         rdfs:label "script_allergenes"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_710458eb_a01b_40fa_846b_903276794c8c
+:OWLNamedIndividual_710458eb_a01b_40fa_846b_903276794c8c rdf:type owl:NamedIndividual ,
+                                                                  :ScriptAction ;
+                                                         :hasContext :OWLNamedIndividual_93864c4c_5701_40c7_be99_b22f76d94f56 ;
+                                                         :hasNextAction :OWLNamedIndividual_c855009e_3e2e_421d_b341_87f4beb7eb61 ;
+                                                         :hasScript :OWLNamedIndividual_69eaaa6c_e481_4615_a53b_a71b28d69094 ;
+                                                         :hasSystem :OWLNamedIndividual_69d999b0_9893_4beb_b44b_feeddc8f1de0 ;
+                                                         :inputParameter :OWLNamedIndividual_78661078_9160_4cd0_80ef_f9359c85edb3 ;
+                                                         :outputParameter :OWLNamedIndividual_0d222f46_e1b3_429c_bd1f_2a455901a2af ;
+                                                         rdfs:label "scriptAction_allergenes"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_754e88b1_5005_4e60_8275_babc8257d76a
+:OWLNamedIndividual_754e88b1_5005_4e60_8275_babc8257d76a rdf:type owl:NamedIndividual ,
+                                                                  :ResultAction ;
+                                                         :hasConnector :OWLNamedIndividual_9b13ce17_4bd0_4463_9ff5_f8da920fab73 ;
+                                                         :hasNextAction :OWLNamedIndividual_29fc670b_22f1_4c78_b870_a8424ff66600 ;
+                                                         :hasSystem :OWLNamedIndividual_85f425cd_14d3_48b8_91a7_ca2e396ee4ce ;
+                                                         :inputParameter :OWLNamedIndividual_525aa99c_d6f2_4363_b1ef_ba552848b6fd ;
+                                                         :httpHeader """{
+\"Content-Type\":\"application/ld+json\",
+\"Accept\": \"*/*\"
+}""" ;
+                                                         rdfs:label "resultAction_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_75ac6de3_9d3f_41e6_ab49_87fdbd81e66d
+:OWLNamedIndividual_75ac6de3_9d3f_41e6_ab49_87fdbd81e66d rdf:type owl:NamedIndividual ,
+                                                                  :HTTPConnector ;
+                                                         :inputParameter :OWLNamedIndividual_9f7eaec9_1c44_4798_9ec5_d1394d731f5b ;
+                                                         :baseUrl "http://localhost:3000" ;
+                                                         rdfs:label "connector_ALLERGENES"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_78661078_9160_4cd0_80ef_f9359c85edb3
+:OWLNamedIndividual_78661078_9160_4cd0_80ef_f9359c85edb3 rdf:type owl:NamedIndividual ,
+                                                                  :StandardParameter ;
+                                                         :paramName "allergenes_res" ;
+                                                         rdfs:label "param_allergenes_response"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_85f425cd_14d3_48b8_91a7_ca2e396ee4ce
+:OWLNamedIndividual_85f425cd_14d3_48b8_91a7_ca2e396ee4ce rdf:type owl:NamedIndividual ,
+                                                                  :System ;
+                                                         rdfs:label "STARDOG"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_93864c4c_5701_40c7_be99_b22f76d94f56
+:OWLNamedIndividual_93864c4c_5701_40c7_be99_b22f76d94f56 rdf:type owl:NamedIndividual ,
+                                                                  :JsonLdContext ;
+                                                         :context """{
+    \"lookup\": \"http://www.metaphacts.com/ontologies/platform/repository/lookup#\",
+    \"@base\": \"http://kg.scania.com/it/pizza/\",
+    \"User\": \"http://www.metaphacts.com/resource/user/\",
+    \"Help\": \"http://help.metaphacts.com/resource/\",
+    \"ourpizza\": \"http://kg.scania.com/it/pizza/\",
+    \"@vocab\": \"http://kg.scania.com/it/pizza/\",
+    \"Platform\": \"http://www.metaphacts.com/ontologies/platform#\",
+    \"owl\": \"http://www.w3.org/2002/07/owl#\",
+    \"xsd\": \"http://www.w3.org/2001/XMLSchema#\",
+    \"Service\": \"http://www.metaphacts.com/ontologies/platform/service/\",
+    \"skos\": \"http://www.w3.org/2004/02/skos/core#\",
+    \"rdfs\": \"http://www.w3.org/2000/01/rdf-schema#\",
+    \"Admin\": \"http://www.metaphacts.com/resource/admin/\",
+    \"Repository\": \"http://www.metaphacts.com/ontologies/repository#\",
+    \"rdf\": \"http://www.w3.org/1999/02/22-rdf-syntax-ns#\",
+    \"sh\": \"http://www.w3.org/ns/shacl#\",
+    \"Assets\": \"http://www.metaphacts.com/resource/assets/\",
+    \"ephedra\": \"http://www.metaphacts.com/ontologies/platform/ephedra#\",
+    \"sp\": \"http://spinrdf.org/sp#\",
+    \"dc\": \"http://purl.org/dc/terms/\",
+    \"rdfs:label\": {
+        \"@id\": \"http://www.w3.org/2000/01/rdf-schema#label\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"rdfs:comment\": {
+        \"@id\": \"http://www.w3.org/2000/01/rdf-schema#comment\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"rdf:type\": {
+        \"@type\": \"@id\"
+    },
+    \"dc:title\": {
+        \"@id\": \"http://purl.org/dc/terms/title\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"dc:source\": {
+        \"@id\": \"http://purl.org/dc/terms/source\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"dc:description\": {
+        \"@id\": \"http://purl.org/dc/terms/description\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"ourpizza:Allergen\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/Allergen\"
+    },
+    \"ourpizza:Ingredient\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/Ingredient\"
+    },
+    \"ourpizza:Pizza\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/Pizza\"
+    },
+    \"ourpizza:hasAllergen\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/hasAllergen\",
+        \"@type\": \"@id\"
+    },
+    \"ourpizza:hasIngredient\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/hasIngredient\",
+        \"@type\": \"@id\"
+    },
+    \"ourpizza:name\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/name\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"filling\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/filling\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"name\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/name\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    },
+    \"id\": {
+        \"@id\": \"http://kg.scania.com/it/pizza/id\",
+        \"@type\": \"http://www.w3.org/2001/XMLSchema#string\"
+    }
+
+}""" ;
+                                                         rdfs:label "pizza_context"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_9b13ce17_4bd0_4463_9ff5_f8da920fab73
+:OWLNamedIndividual_9b13ce17_4bd0_4463_9ff5_f8da920fab73 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPConnector ;
+                                                         :hasAuthenticationMethod :OWLNamedIndividual_d33a4529_41fc_4391_a707_750e11e245d3 ;
+                                                         :baseUrl "http://localhost:5820" ;
+                                                         rdfs:label "connector_STARDOG"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_9d8f6320_36be_4f43_93e8_8dc8e8d2e13f
+:OWLNamedIndividual_9d8f6320_36be_4f43_93e8_8dc8e8d2e13f rdf:type owl:NamedIndividual ,
+                                                                  :StandardParameter ;
+                                                         :paramName "partDetails" ;
+                                                         rdfs:label "param_partDetails"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_9f7eaec9_1c44_4798_9ec5_d1394d731f5b
+:OWLNamedIndividual_9f7eaec9_1c44_4798_9ec5_d1394d731f5b rdf:type owl:NamedIndividual ,
+                                                                  :HTTPBasicAuthenticationMethod ;
+                                                         :inputParameter :OWLNamedIndividual_b0c714de_39af_4eba_afa6_86c34de1307e ;
+                                                         rdfs:label "basicAuth_allergenes"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_a65f0c37_d8df_4c0a_b8d3_814c94c2d66b
+:OWLNamedIndividual_a65f0c37_d8df_4c0a_b8d3_814c94c2d66b rdf:type owl:NamedIndividual ,
+                                                                  :Task ;
+                                                         :hasAction :OWLNamedIndividual_17ea3a4b_7fe0_4632_8eab_5bf3dd7a9e85 ;
+                                                         :hasContext :OWLNamedIndividual_93864c4c_5701_40c7_be99_b22f76d94f56 ;
+                                                         :hasResultMetaData :OWLNamedIndividual_13478c21_7aa8_462e_b3e4_588f159d1931 ;
+                                                         :inputParameter :OWLNamedIndividual_3a45ce92_cb98_42b6_bf1b_9cc25465238e ,
+                                                                         :OWLNamedIndividual_4f1605c9_3e0c_4dd3_9073_bc36c928b79e ,
+                                                                         :OWLNamedIndividual_5f935e41_7129_4262_b54b_87298dc18fbb ,
+                                                                         :OWLNamedIndividual_b0113089_b0ca_46b2_9a39_809932e10af7 ,
+                                                                         :OWLNamedIndividual_b0c714de_39af_4eba_afa6_86c34de1307e ;
+                                                         rdfs:label "task_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_b0113089_b0ca_46b2_9a39_809932e10af7
+:OWLNamedIndividual_b0113089_b0ca_46b2_9a39_809932e10af7 rdf:type owl:NamedIndividual ,
+                                                                  :StandardParameter ;
+                                                         :paramName "itemId" ;
+                                                         rdfs:label "param_itemId"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_b0c714de_39af_4eba_afa6_86c34de1307e
+:OWLNamedIndividual_b0c714de_39af_4eba_afa6_86c34de1307e rdf:type owl:NamedIndividual ,
+                                                                  :BasicCredentialsParameter ;
+                                                         :password "" ;
+                                                         :username "" ;
+                                                         rdfs:label "param_allergenes_credential"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_c855009e_3e2e_421d_b341_87f4beb7eb61
+:OWLNamedIndividual_c855009e_3e2e_421d_b341_87f4beb7eb61 rdf:type owl:NamedIndividual ,
+                                                                  :ResultAction ;
+                                                         :hasConnector :OWLNamedIndividual_9b13ce17_4bd0_4463_9ff5_f8da920fab73 ;
+                                                         :hasSystem :OWLNamedIndividual_85f425cd_14d3_48b8_91a7_ca2e396ee4ce ;
+                                                         :inputParameter :OWLNamedIndividual_0d222f46_e1b3_429c_bd1f_2a455901a2af ;
+                                                         :httpHeader """{
+\"Content-Type\":\"application/ld+json\",
+\"Accept\": \"*/*\"
+}""" ;
+                                                         rdfs:label "resultAction_allergenes"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_d33a4529_41fc_4391_a707_750e11e245d3
+:OWLNamedIndividual_d33a4529_41fc_4391_a707_750e11e245d3 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPBasicAuthenticationMethod ;
+                                                         :inputParameter :OWLNamedIndividual_5f935e41_7129_4262_b54b_87298dc18fbb ;
+                                                         rdfs:label "basicAuth_stardog"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_d484fd2c_cc13_4284_ae65_9a5fcb261868
+:OWLNamedIndividual_d484fd2c_cc13_4284_ae65_9a5fcb261868 rdf:type owl:NamedIndividual ,
+                                                                  :GroovyScript ;
+                                                         :script """import com.google.gson.Gson
+import groovy.json.JsonSlurper
+import org.apache.commons.io.IOUtils
+import org.apache.jena.query.Dataset
+import org.apache.jena.query.DatasetFactory
+import org.apache.jena.query.Query
+import org.apache.jena.query.QueryExecution
+import org.apache.jena.query.QueryExecutionFactory
+import org.apache.jena.query.QueryFactory
+import org.apache.jena.query.ReadWrite
+import org.apache.jena.rdf.model.Model
+import org.apache.jena.riot.Lang
+import org.apache.jena.riot.RDFDataMgr
+import org.apache.jena.riot.RDFLanguages
+import org.apache.jena.riot.RDFParser
+import org.json.XML
+import org.json.JSONObject
+
+def jsonSlurper = new JsonSlurper();
+
+//result map which stores final result
+result = [:]
+
+//ClassLoader classLoader = getClass().getClassLoader();
+//URL listElem = classLoader.getResource('apiResources/pizza.json');
+//def _data = new File(listElem.toURI())
+//data_res = jsonSlurper.parse(_data)
+//
+//ctx = jsonSlurper.parseText(data_res.getAt(\"context\"))
+//data_inputparams = jsonSlurper.parseText(data_res.getAt(\"inputParameter\"))
+//data_httpbody = getValues(data_inputparams.getAt(\"pizza_res\"),jsonSlurper)
+//data_outputparams = jsonSlurper.parseText(data_res.getAt(\"outputParameters\"))
+
+ctx = jsonSlurper.parseText(context)
+data_inputparams = jsonSlurper.parseText(inputParameter)
+data_httpbody = getValues(data_inputparams.getAt(\"pizza_res\"),jsonSlurper)
+data_outputparams = jsonSlurper.parseText(outputParameters)
+
+def getValues(List list,JsonSlurper jsonSlurper){
+    paramValuesList = []
+    for(Map map:list) {
+        map.each {
+            key,value ->
+                for(String valueList:((ArrayList)jsonSlurper.parseText(value))){
+                    paramValuesList.add(valueList)
+                }
+        }
+    }
+    return paramValuesList
+}
+
+def createResultParameter(String subjectIri, HashMap<String, String> keyValue) {
+    resultValue = [:]
+    keyValue.each { key, value ->
+        resultValue.put(key, value)
+    }
+    result.put(subjectIri, resultValue)
+}
+
+// to convert base64 encoded String to xml
+def base64Decode(encodedString){
+    byte[] decoded = encodedString.decodeBase64()
+    String decode = new String(decoded)
+    return decode
+}
+
+//Main function
+def main(JsonSlurper jsonSlurper) {
+    Gson gson = new Gson();
+    mapGraph = [:]
+    httpBody = \"\"
+    resultList = []
+    Dataset ds = DatasetFactory.createTxnMem();
+        mapGraph[\"@context\"] = ctx
+        mapGraph[\"@graph\"] = jsonSlurper.parseText(data_httpbody)
+        resultString = gson.toJson(mapGraph, Map.class);
+        InputStream is = IOUtils.toInputStream(resultString, \"UTF-8\");
+        RDFParser.source(is).lang(RDFLanguages.JSONLD)
+                .parse(ds);
+        qry =\"                PREFIX pz:<http://kg.scania.com/it/pizza/>\\n\" +
+              \"                PREFIX :<http://kg.scania.com/pizza#>\\n\" +
+              \"                PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\\n\" +
+              \"                PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\\n\" +
+              \"                CONSTRUCT{\\n\" +
+              \"                    ?pizza rdf:type pz:Pizza ;\\n\" +
+              \"                           pz:id ?pizza_id ;\\n\" +
+              \"                           rdfs:label ?name ;\\n\" +
+              \"                           pz:hasIngredient ?ingredients .\\n\" +
+              \"                }\\n\" +
+              \"                WHERE{\\n\" +
+              \"                    {?s <http://kg.scania.com/it/pizza/id> \\\"1\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ;\\n\" +
+              \"                    <http://kg.scania.com/it/pizza/filling> ?filling.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?filling))) as ?ingredient)\\n\" +
+              \"                    BIND(URI(REPLACE(STR(?ingredient), \\\" \\\", \\\"_\\\")) AS ?ingredients)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/\\\", STR(?name))) as ?pizza)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"1\\\")) as ?pizza_id)}\\n\" +
+              \"                    UNION{\\n\" +
+              \"                         ?s <http://kg.scania.com/it/pizza/id> \\\"2\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ;\\n\" +
+              \"                    <http://kg.scania.com/it/pizza/filling> ?filling.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?filling))) as ?ingredient)\\n\" +
+              \"                    BIND(URI(REPLACE(STR(?ingredient), \\\" \\\", \\\"_\\\")) AS ?ingredients)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/\\\", STR(?name))) as ?pizza)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"2\\\")) as ?pizza_id)\\n\" +
+              \"                    }   \\n\" +
+              \"                    UNION{\\n\" +
+              \"                    ?s <http://kg.scania.com/it/pizza/id> \\\"3\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ;\\n\" +
+              \"                    <http://kg.scania.com/it/pizza/filling> ?filling.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?filling))) as ?ingredient)\\n\" +
+              \"                    BIND(URI(REPLACE(STR(?ingredient), \\\" \\\", \\\"_\\\")) AS ?ingredients)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/\\\", STR(?name))) as ?pizza)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"3\\\")) as ?pizza_id)\\n\" +
+              \"                    }    \\n\" +
+              \"                    UNION{\\n\" +
+              \"                    ?s <http://kg.scania.com/it/pizza/id> \\\"4\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ;\\n\" +
+              \"                    <http://kg.scania.com/it/pizza/filling> ?filling.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?filling))) as ?ingredient)\\n\" +
+              \"                    BIND(URI(REPLACE(STR(?ingredient), \\\" \\\", \\\"_\\\")) AS ?ingredients)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/\\\", STR(?name))) as ?pizza)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"4\\\")) as ?pizza_id)\\n\" +
+              \"                    }    \\n\" +
+              \"                    UNION{\\n\" +
+              \"                    ?s <http://kg.scania.com/it/pizza/id> \\\"5\\\" ; \\n\" +
+              \"                    <http://kg.scania.com/it/pizza/name> ?name ;\\n\" +
+              \"                    <http://kg.scania.com/it/pizza/filling> ?filling.\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", STR(?filling))) as ?ingredient)\\n\" +
+              \"                    BIND(URI(REPLACE(STR(?ingredient), \\\" \\\", \\\"_\\\")) AS ?ingredients)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/\\\", STR(?name))) as ?pizza)\\n\" +
+              \"                    BIND(URI(CONCAT(\\\"http://kg.scania.com/it/pizza/\\\", \\\"5\\\")) as ?pizza_id)\\n\" +
+              \"                    }\\n\" +
+              \"                    \\n\" +
+              \"                }\";
+        Query query = QueryFactory.create(qry);
+        ds.begin(ReadWrite.READ);
+        try {
+            QueryExecution qexec = QueryExecutionFactory.create(query, ds);
+            Model modelresult = qexec.execConstruct();
+            StringWriter out = new StringWriter();
+            RDFDataMgr.write(out, modelresult, Lang.JSONLD);
+            httpBody = out.toString();
+            //System.out.println(out.toString());
+            qexec.close();
+        } finally {
+            ds.end();
+        }
+        resultList.add(httpBody)
+        resultmap = [:]
+        resultmap.put(\"httpBody\", resultList)
+        createResultParameter(data_outputparams.get(\"param_pizzaDetails_stardog\"), resultmap)
+}
+
+main(jsonSlurper)
+return result""" ;
+                                                         rdfs:label "script_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_dade0fd3_1e61_47a2_8dee_4b224c931b75
+:OWLNamedIndividual_dade0fd3_1e61_47a2_8dee_4b224c931b75 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPBasicAuthenticationMethod ;
+                                                         :inputParameter :OWLNamedIndividual_3a45ce92_cb98_42b6_bf1b_9cc25465238e ;
+                                                         rdfs:label "basicAuth_pizza"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_f9879480_3a86_4ddb_ba74_f0d217f6b96b
+:OWLNamedIndividual_f9879480_3a86_4ddb_ba74_f0d217f6b96b rdf:type owl:NamedIndividual ,
+                                                                  :StandardParameter ;
+                                                         :paramName "pizza_res" ;
+                                                         rdfs:label "param_pizza_response"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_f9a8cf9a_25fe_4548_b9c1_7f6aa9092053
+:OWLNamedIndividual_f9a8cf9a_25fe_4548_b9c1_7f6aa9092053 rdf:type owl:NamedIndividual ,
+                                                                  :HTTPParameter ;
+                                                         :httpBody "" ;
+                                                         rdfs:label "param_partDetails_stardog"@en .
+
+
+###  https://kg.scania.com/it/iris_orchestration/OWLNamedIndividual_fbf425e9_0736_4254_b70b_cb80ad0c3fe9
+:OWLNamedIndividual_fbf425e9_0736_4254_b70b_cb80ad0c3fe9 rdf:type owl:NamedIndividual ,
+                                                                  core:Metadata ;
+                                                         core:contributor "user@mail.com" ;
+                                                         core:creator "user@mail.com" ;
+                                                         core:graphType "private" ;
+                                                         core:informationResponsible "user@mail.com" ;
+                                                         :description "" ;
+                                                         :ooVersion 2.0 ;
+                                                         :title "Pizza_Details" ;
+                                                         core:timestamp "" ;
+                                                         rdfs:label "pizza_metaData"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
